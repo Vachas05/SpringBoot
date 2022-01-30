@@ -1,5 +1,8 @@
 package in.allamvachaspati.springRestApi.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,23 +13,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import in.allamvachaspati.springRestApi.model.Employee;
+import in.allamvachaspati.springRestApi.service.EmployeeService;
 
 @RestController
 public class EmployeeController {
 	
+	@Autowired
+	private EmployeeService eService;
+	
 	@GetMapping("/employees")
-	public String getEmployees() {
-		return "displaying the list of employees!!";
+	public List<Employee> getEmployees() {
+		return eService.getEmployees();
 	}
 	
 	@GetMapping("/employee/{id}")
-	public String getEmployee(@PathVariable Long id) {
-		return "fetching the details of the employee id : "+ id;
+	public Employee getEmployee(@PathVariable Long id) {
+		return eService.getSingleEmployee(id);
 	}
 	
 	@PostMapping("/employees")
-	public String saveEmployee(@RequestBody Employee employee) {
-		return "saving the employee details." + employee;
+	public Employee saveEmployee(@RequestBody Employee employee) {
+		return eService.saveEmployee(employee);
 	}
 	
 	@PutMapping("/employees/{id}")
