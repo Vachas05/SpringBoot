@@ -38,13 +38,13 @@ public class EmployeeController {
 	
 	@PutMapping("/employees/{id}")
 	public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
-		System.out.println("update the detailes of employee :  " + id);
-		return employee;
+		employee.setId(id);
+		return eService.updateEmployee(employee);
 	}
 	
 	@DeleteMapping("/employees")
-	public String deleteEmployee(@RequestParam Long id) {
-		return "deleting employee with id : " + id;
+	public void deleteEmployee(@RequestParam Long id) {
+		eService.deleteEmployee(id);
 	}
 	
 }
